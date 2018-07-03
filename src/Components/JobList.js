@@ -45,7 +45,7 @@ function JobList(props) {
           <TableRow>
             <TableCell>Job ID</TableCell>
             <TableCell>Description</TableCell>
-            <TableCell date>Interview Date</TableCell>
+            <TableCell>Interview Date</TableCell>
             <TableCell>Apply</TableCell>
           </TableRow>
         </TableHead>
@@ -58,7 +58,7 @@ function JobList(props) {
                 </TableCell>
                 <TableCell >{n.desc}</TableCell>
                 <TableCell >{n.date}</TableCell>
-                <TableCell ><NavLink to="/login">Apply</NavLink></TableCell>
+                <TableCell ><NavLink to="/profile">Apply</NavLink></TableCell>
               </TableRow>
             );
           })}
