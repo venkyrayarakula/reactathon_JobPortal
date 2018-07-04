@@ -9,6 +9,29 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import { graphql } from "react-apollo";
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
+import {withRouter} from 'react-router-dom';
+
+
+
+
+
+const JOBLIST_QUERY = gql`
+query listJobPostings  {
+
+   listJobPostings {
+    items {
+      id
+      title
+      desc
+      postDate
+    }
+  }
+}
+
+`;
 
 const styles = theme => ({
   root: {
@@ -21,43 +44,35 @@ const styles = theme => ({
   },
 });
 
-let id = 0;
-function createData(JobId, desc, date) {
-  id += 1;
-  return { id, JobId, desc, date };
-}
 
-const data = [
-  createData(123, 'java developer', '01/12/2018'),
-  createData(123, 'java developer', '01/12/2018'),
-  createData(123, 'java developer', '01/12/2018'),
-  createData(123, 'java developer', '01/12/2018'),
-  createData(123, 'java developer', '01/12/2018'),
-];
 
 function JobList(props) {
-  const { classes } = props;
+  //const { classes } = props;
+  console.log(props);
+  const jobs = props.data.listJobPostings.items;
 
   return (
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
+    <Paper>
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell>Job ID</TableCell>
+            <TableCell>Job Title</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Interview Date</TableCell>
             <TableCell>Apply</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(n => {
+          {jobs.map(n => {
             return (
               <TableRow key={n.id}>
                 <TableCell component="th" scope="row">
-                  {n.JobId}
+                  {n.id}
                 </TableCell>
+                <TableCell >{n.title}</TableCell>
                 <TableCell >{n.desc}</TableCell>
-                <TableCell >{n.date}</TableCell>
+                 <TableCell >{n.postDate}</TableCell>
                 <TableCell ><NavLink to="/profile">Apply</NavLink></TableCell>
               </TableRow>
             );
@@ -68,8 +83,7 @@ function JobList(props) {
   );
 }
 
-JobList.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
-export default withStyles(styles)(JobList);
+export default graphql(JOBLIST_QUERY) (JobList)
+
+

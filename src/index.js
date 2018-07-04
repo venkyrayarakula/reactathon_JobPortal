@@ -9,19 +9,36 @@ import registerServiceWorker from './registerServiceWorker';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+import AWSAppSyncClient from "aws-appsync";
+import { Rehydrated } from 'aws-appsync-react';
+import { ApolloProvider } from 'react-apollo';
+import config from './global/config';
+
+
+const client = new AWSAppSyncClient({
+  url: config.graphqlEndpoint,
+  region: config.region,
+  auth: {
+    type: config.authenticationType,
+    apiKey: config.apiKey,
+  }
+});
 //ReactDOM.render(<App />, document.getElementById('root'));
 
 
 ReactDOM.render((
-  <Router>
-  <div>
-  	<NavBar/>
-	<Route exact path="/" component={App} />
-    <Route path="/login" component={Login} />
-    <Route path="/profile" component={UserProfile} />
-  </div>
-    
-  </Router>),
+	<ApolloProvider client={ client }>
+	  <Rehydrated> 
+		  <Router>
+			  <div>
+			  	<NavBar/>
+				<Route exact path="/" component={App} />
+			    <Route path="/login" component={Login} />
+			    <Route path="/profile" component={UserProfile} />
+			  </div>
+		  </Router>
+	  </Rehydrated>
+	</ApolloProvider>),
   document.getElementById('root')
 );
 registerServiceWorker();

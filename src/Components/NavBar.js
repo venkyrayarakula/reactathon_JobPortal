@@ -36,7 +36,7 @@ function NavBar(props) {
           <MdHome/>                    
           </IconButton>
           <Typography variant="title" color="inherit" className={classes.flex}>
-            Verizon Job Portal
+             Job Portal
           </Typography>
           <Button color="inherit" href="/login" className={classes.button} to="/login">Login</Button>
         </Toolbar>
