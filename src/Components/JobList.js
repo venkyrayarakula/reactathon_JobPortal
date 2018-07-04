@@ -41,8 +41,12 @@ const styles = theme => ({
   table: {
     minWidth: 700,
   },
-});
 
+});
+const updateSelectedJob = (selected_job) => {
+    console.log(selected_job);
+    sessionStorage.setItem("selected_job", JSON.stringify(selected_job));
+}
 const JobList = ({ user }) => (
   <Query query={JOBLIST_QUERY}>
     {({ loading, error, data }) => {
@@ -61,7 +65,7 @@ const JobList = ({ user }) => (
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.listJobPostings.items.map(n => {
+          {data.listJobPostings.items.map((n,index) => {
             return (
               <TableRow key={n.id}>
                 <TableCell component="th" scope="row">
@@ -70,7 +74,7 @@ const JobList = ({ user }) => (
                 <TableCell >{n.title}</TableCell>
                 <TableCell >{n.desc}</TableCell>
                  <TableCell >{n.postDate}</TableCell>
-                <TableCell ><NavLink to="/profile">Apply</NavLink></TableCell>
+                <TableCell ><NavLink onClick={updateSelectedJob(data.listJobPostings.items[index])} to="/apply">Apply</NavLink></TableCell>
               </TableRow>
             );
           })}
