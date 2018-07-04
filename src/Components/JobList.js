@@ -8,11 +8,15 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+
+//import { withApollo } from 'react-apollo';
+
 import { graphql } from "react-apollo";
+
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
-import {withRouter} from 'react-router-dom';
 
 const JOBLIST_QUERY = gql`
 query listJobPostings  {
@@ -26,6 +30,7 @@ query listJobPostings  {
     }
   }
 }`;
+var jobs = {};
 
 const styles = theme => ({
   root: {
@@ -38,11 +43,13 @@ const styles = theme => ({
   },
 });
 
-function JobList(props) {
-  const jobs = props.data.listJobPostings.items;
-
-  return (
-    <Paper>
+const JobList = ({ user }) => (
+  <Query query={JOBLIST_QUERY}>
+    {({ loading, error, data }) => {
+      if (loading) return "Loading...";
+      if (error) return `Error! ${error.message}`;
+      return (
+       <Paper>
       <Table>
         <TableHead>
           <TableRow>
@@ -54,7 +61,7 @@ function JobList(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {jobs.map(n => {
+          {data.listJobPostings.items.map(n => {
             return (
               <TableRow key={n.id}>
                 <TableCell component="th" scope="row">
@@ -70,9 +77,10 @@ function JobList(props) {
         </TableBody>
       </Table>
     </Paper>
-  );
-}
+      );
+    }}
+  </Query>
+);
 
-export default graphql(JOBLIST_QUERY) (JobList)
-
+export default JobList;
 
