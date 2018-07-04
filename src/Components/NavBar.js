@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 //import MenuIcon from '@material-ui/icons/Menu';
 
 import MdHome from 'react-icons/lib/md/home';
+import MdAccount from 'react-icons/lib/md/account-circle';
 
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 
@@ -38,6 +39,8 @@ function NavBar(props) {
           <Typography variant="title" color="inherit" className={classes.flex}>
              Job Portal
           </Typography>
+          
+          <IconButton color="inherit" href="/profile" className={classes.button} to="/profile"><MdAccount/></IconButton>
           <Button color="inherit" href="/login" className={classes.button} to="/login">Login</Button>
         </Toolbar>
       </AppBar>

@@ -23,8 +23,6 @@ const client = new AWSAppSyncClient({
     apiKey: config.apiKey,
   }
 });
-//ReactDOM.render(<App />, document.getElementById('root'));
-
 
 ReactDOM.render((
 	<ApolloProvider client={ client }>

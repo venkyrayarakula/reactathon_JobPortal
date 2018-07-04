@@ -30,8 +30,8 @@ import { withApollo } from 'react-apollo';
        query: FETCHUSER,
        variables: { id: id }
       }).then((res) => {       
-         sessionStorage.loggedInUser = res.data.getCandidate;
-         console.log(res.data.getCandidate);
+         sessionStorage.setItem("loggedInUser",JSON.stringify(res.data.getCandidate));
+         console.log(JSON.parse(sessionStorage.getItem("loggedInUser")));
        });
       alert('Login callback, see log on the console to see the data.');
     };

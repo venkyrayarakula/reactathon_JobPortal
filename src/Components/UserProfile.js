@@ -14,7 +14,18 @@ class UserProfile extends Component {
       [name]: event.target.value,
     });
   };
+  
+  loadProfile = () => {
+    var user = JSON.parse(sessionStorage.getItem("loggedInUser"));
+    if(user) {
+      this.state.FirstName = user.firstName;
+      this.state.LastName = user.lastName;
+      this.state.Email = user.email;
+    }
+
+  }
   render() {
+    this.loadProfile();
     return (
      <MuiThemeProvider>
       <form style={{ margin: '25px'}} noValidate autoComplete="off">
@@ -34,7 +45,7 @@ class UserProfile extends Component {
           onChange={this.handleChange('LastName')}
         />
         </div>        
-        <EmailInputField/>
+        <EmailInputField value={this.state.Email} onChange={this.handleChange('Email')} />
         </form>
         </MuiThemeProvider>
 

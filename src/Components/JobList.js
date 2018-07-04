@@ -14,10 +14,6 @@ import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import {withRouter} from 'react-router-dom';
 
-
-
-
-
 const JOBLIST_QUERY = gql`
 query listJobPostings  {
 
@@ -29,9 +25,7 @@ query listJobPostings  {
       postDate
     }
   }
-}
-
-`;
+}`;
 
 const styles = theme => ({
   root: {
@@ -44,11 +38,7 @@ const styles = theme => ({
   },
 });
 
-
-
 function JobList(props) {
-  //const { classes } = props;
-  console.log(props);
   const jobs = props.data.listJobPostings.items;
 
   return (
@@ -82,7 +72,6 @@ function JobList(props) {
     </Paper>
   );
 }
-
 
 export default graphql(JOBLIST_QUERY) (JobList)
 
